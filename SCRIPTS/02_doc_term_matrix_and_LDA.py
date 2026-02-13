@@ -70,7 +70,7 @@ for k, sample_model in sample_models.items():
 # Printing the coherence of each model for evaluation
 print('Coherence scores: \n')
 for k in sorted(coherences):
-  print(k, coherences[k], '\n')
+  print('k value:', k, 'Coherence:', coherences[k], '\n')
 
 # LDA model with the entire dataset and chosen k value (k=6)
 
