@@ -11,7 +11,7 @@ import random, numpy as np
 random.seed(100)
 np.random.seed(100)
 
-df = pd.read_csv('DS-4002_Group5_Project1/DATA/McDonalds_Reviews_Cleaned.csv')
+df = pd.read_csv('/content/DS-4002_Group5_Project1/DATA/McDonalds_Reviews_Cleaned.csv')
 df1 = df[df['review'].notna()].copy()
 
 # Turn 'review' column into a list of reviews
@@ -22,6 +22,7 @@ tokenized_text = [t.split() for t in texts]
 
 # Assigns a number/ID to each word and a mapping for each review based on these IDs
 dic = corpora.Dictionary(tokenized_text)
+
 # Filtering out uncommon words to reduce runtime for next steps
 dic.filter_extremes(no_below=10, no_above=0.5, keep_n=50000)
 
@@ -31,11 +32,14 @@ doc_term_matrix = [dic.doc2bow(review) for review in tokenized_text]
 # Finding the optimal k value to fit the LDA model
 LDA = gensim.models.ldamodel.LdaModel
 
+# Sampling the data to reduce runtime when fitting multiple LDA models with differen k values
+# Once we choose a k value, we will fit the entire dataset 
 N_sample = 5000
 idx = random.sample(range(len(tokenized_text)), k=min(N_sample, len(tokenized_text)))
 token_sample = [tokenized_text[i] for i in idx]
 doc_sample = [doc_term_matrix[i] for i in idx]
 
+# Fitting each LDA model with different k values
 k_values = [3, 4, 5, 6, 7]
 sample_models = {}
 for k in k_values:
@@ -52,6 +56,7 @@ for k in k_values:
   )
   sample_models[k] = sample_lda_model
 
+# Finding the coherences of each LDA model with different k values
 coherences = {}
 for k, sample_model in sample_models.items():
   coherence_model_sample = CoherenceModel(
@@ -62,11 +67,12 @@ for k, sample_model in sample_models.items():
   )
   coherences[k] = coherence_model_sample.get_coherence()
 
+# Printing the coherence of each model for evaluation
 print('Coherence scores: \n')
 for k in sorted(coherences):
   print(k, coherences[k], '\n')
 
-# LDA model
+# LDA model with the entire dataset and chosen k value (k=6)
 
 lda_model = LDA(
     corpus = doc_term_matrix,
@@ -79,7 +85,7 @@ lda_model = LDA(
 )
 print(lda_model.print_topics(), '\n')
 
-# Evaluation
+# Evaluating the model (perplexity and coherence)
 
 print('\nPerplexity:', lda_model.log_perplexity(
         doc_term_matrix, total_docs=len(doc_term_matrix)))
@@ -92,7 +98,7 @@ coherence_model_lda = CoherenceModel(
 coherence_lda = coherence_model_lda.get_coherence()
 print('Coherence:', coherence_lda)
 
-# Assigning topics to reviews
+# Assigning the topic of highest probability to each review
 
 def get_topic(model, review):
   topic_probs = model.get_document_topics(review)
@@ -102,8 +108,11 @@ def get_topic(model, review):
 topic_all = [get_topic(lda_model, review) for review in doc_term_matrix]
 # returns a list of (topic, probability)
 
+# Adding columns in the dataset to record the topic and the corresponding probability
 df1['topic'] = [t for t, p in topic_all]
 df1['topic_probability'] = [p for t, p in topic_all]
+
+# Giving the topic categories more descriptive labels
 
 topic_labels = {
     0: 'Bad service, wrong orders, rude staff',
@@ -116,10 +125,11 @@ topic_labels = {
 
 df1['topic_label'] = df1['topic'].map(topic_labels)
 
-# Assign positive, negative, and neutral sentiments to reviews by their rating
-
+# Extracting the number from the ratings (omitting the 'star' or 'stars' label that follows the number)
 df1['rating_number_only'] = df1['rating'].str.extract(r'(\d)').astype(int)
 
+# Assign positive, negative, and neutral sentiments to reviews by their rating
+# 4 and 5 stars = positive, 1 and 2 stars = negative, 3 stars = neutral
 def classify_rating(r):
   if r >= 4:
     return 'positive'
@@ -128,6 +138,7 @@ def classify_rating(r):
   else:
     return 'neutral'
 
+# Adding a column to describe the sentiment of each review
 df1['sentiment'] = df1['rating_number_only'].apply(classify_rating)
 
 # Find common topics in positive and negative reviews
@@ -140,7 +151,7 @@ print('Most common topics in positive reviews: \n', positive_topics, '\n')
 print('Most common topics in negative reviews: \n', negative_topics, '\n')
 print('Most common topics in neutral reviews: \n', neutral_topics, '\n')
 
-# Topic proportions
+# Proportion of each topic in positive and negative reviews
 
 positive_topic_proportion = df1[df1['sentiment'] == 'positive']['topic_label'].value_counts(normalize=True)
 negative_topic_proportion = df1[df1['sentiment'] == 'negative']['topic_label'].value_counts(normalize=True)
@@ -148,4 +159,5 @@ negative_topic_proportion = df1[df1['sentiment'] == 'negative']['topic_label'].v
 print('Topic distribution in positive reviews: \n', positive_topic_proportion, '\n')
 print('Topic distribution in negative reviews: \n', negative_topic_proportion, '\n')
 
+# Saving dataset
 df1.to_csv('/content/DS-4002_Group5_Project1/DATA/McDonalds_Reviews_With_Topics.csv', index=False)
