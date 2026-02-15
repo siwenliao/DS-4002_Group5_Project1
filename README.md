@@ -72,8 +72,18 @@ DS-4002_Group5_Project1/
 - **Step 3**: After preprocessing the data, run the 02_doc_term_matrix_and_LDA.py script. This script will read the McDonalds_Reviews_Cleaned.csv dataset, tokenize reviews, build the dictionary and bag-of-words document-term matrix to prepare for LDA, evaluate mutiple k values based on coherence scores to find the most optimal k value for the LDA model, fits the LDA model with the chosen k value on the entire dataset, and output the topic-word distribution (topics and words that indicate each topic). Then, it will also assign each review to the most-likely topic and produce the dataset with topic assignments. The output should include the coherence scores for the multiple k values, the topic-word distribution output, the perplexity and coherence scores for the fitted LDA model, the most common topics based on sentiment of reviews, and the topic distribution for positive and negative reviews.
   - Some notes for Step 3:
     - You will need to uncomment the !pip install --upgrade gensim pyLDAvis spacy pandas scikit-learn if you do not have the necessary packages already installed.
-    - While the coherence
+    - Since LDA is a probabilistic model and the optimal k value is found by computing coherence scores of different k values using a random sample of the full dataset to reduce runtime, we fix a random seed to improve consistency in results and help with reproducibility. 
+    - While the coherence score for k=3 was the highest, k=6 was chosen because it was the highest k value before a noticeable dip in coherence for k >= 7. A higher k value implies more topics existing throughout the data, which provide more interesting results. In summary, k=6 was a balance between coherence scores and producing interesting/interpretable results.
+    - The topic labels for the 6 different topics are:
+      - 0: 'Bad service, wrong orders, rude staff'
+      - 1: 'Fast and quick service, clean place, friendly staff'
+      - 2: 'Overall good price, quality, service'
+      - 3: 'Food quality issues (cold/old fries, burgers, nuggets)'
+      - 4: 'Long wait times, slow drive-thru'
+      - 5: 'Miscellanous, general complains about environment'
     - 4 or 5-star reviews are considered positive, 1 or 2-star reviews are considered negative, and 3-star reviews are considered neutral. 
     - This script may run for 5-10 minutes.
-- **Step 4**: 
+- **Step 4**: Hypothesis testing
+- **Step 5**: Verify your outputs match those in the OUTPUT folder. 
+
 
