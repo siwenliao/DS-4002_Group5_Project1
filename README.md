@@ -83,7 +83,7 @@ DS-4002_Group5_Project1/
       - 5: 'Miscellanous, general complains about environment'
     - 4 or 5-star reviews are considered positive, 1 or 2-star reviews are considered negative, and 3-star reviews are considered neutral. 
     - This script may run for 5-10 minutes.
-- **Step 4**: The 03_hypothesis_test.py script performs two one-proportion z-tests to test whether at least 30% of positive and negative reviews are assigned to food quality and bad service, respectively. It also reports the distribution of the 6 topic labels by sentiment. The z-test conclusions indicate whether food quality and customer service at at least as prevalent as the 30% benchmark.
+- **Step 4**: For the final step of that analysis, run the 03_hypothesis_test.py script. The script performs two one-proportion z-tests to test whether at least 30% of positive and negative reviews are assigned to food quality and bad service, respectively. It also reports the distribution of the 6 topic labels by sentiment. The z-test conclusions indicate whether food quality and customer service at at least as prevalent as the 30% benchmark.
 - **Step 5**: Verify your outputs match those in the OUTPUT folder. 
 
 
