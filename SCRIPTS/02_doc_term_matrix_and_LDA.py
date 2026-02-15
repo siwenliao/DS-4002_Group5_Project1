@@ -1,5 +1,8 @@
+# Goal: Fit the LDA model with the most optimal k value and assign a topic to each review
+# Steps: Tokenize the reviews and create a document-term matrix to prepare for LDA, find the optimal k value based on coherence, 
+#         fit the LDA model with the chosen k value, assign a topic to each review, and analyze the topics for positive and negative reviews
 
-# Uncomment if you need to install to import gensim
+# Uncomment the following line if you need to install to import gensim:
 # !pip install --upgrade gensim pyLDAvis spacy pandas scikit-learn
 import pandas as pd
 import gensim
