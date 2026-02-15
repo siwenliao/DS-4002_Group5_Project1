@@ -156,8 +156,8 @@ print('Most common topics in neutral reviews: \n', neutral_topics, '\n')
 positive_topic_proportion = df1[df1['sentiment'] == 'positive']['topic_label'].value_counts(normalize=True)
 negative_topic_proportion = df1[df1['sentiment'] == 'negative']['topic_label'].value_counts(normalize=True)
 
-print('Topic distribution in positive reviews: \n', positive_topic_proportion, '\n')
-print('Topic distribution in negative reviews: \n', negative_topic_proportion, '\n')
+print('Topic distribution for positive reviews: \n', positive_topic_proportion, '\n')
+print('Topic distribution for negative reviews: \n', negative_topic_proportion, '\n')
 
 # Saving dataset
 df1.to_csv('/content/DS-4002_Group5_Project1/DATA/McDonalds_Reviews_With_Topics.csv', index=False)
