@@ -73,7 +73,7 @@ DS-4002_Group5_Project1/
 
 - **Step 1**: Clone the repository. Cloning creates a complete local copy of the repository, including all files and branches. Make sure that you can see the DATA, OUTPUT, and SCRIPTS folders.
 - **Step 2**: In Google Colab, or the desired platform of choice, run the 01_preprocess.py script. Make sure DATA/McDonalds_Reviews.csv exists. Note that the code to install the necessary packages and make the necessary downloads are included. The 01_preprocess.py script will read the McDonalds_Reviews.csv dataset, lowercase all text, remove punctuation and digits, and discard short and non-informative words (stopwords) to isolate only the words (generally nouns and adjectives) that contain the most information about each review's topic. Additionally, the script will reduce words to their base form (fries to fry, parking to park, etc.) and produce the cleaned dataset: McDonalds_Reviews_Cleaned.csv. 
-- **Step 3**: After preprocessing the data, run the 02_doc_term_matrix_and_LDA.py script. This script will
+- **Step 3**: After preprocessing the data, run the 02_doc_term_matrix_and_LDA.py script. This script will:
     - Read the McDonalds_Reviews_Cleaned.csv dataset
     - Tokenize reviews
     - Build the dictionary and bag-of-words document-term matrix to prepare for LDA
@@ -81,12 +81,14 @@ DS-4002_Group5_Project1/
     - Fit the LDA model with the chosen k value on the entire dataset
     - Output the topic-word distribution (topics and the words that indicate each topic)
     - Assign each review to the most-likely topic and produce the dataset with topic assignments
+
 The output should include:
     - Coherence scores for the multiple k values
     - Topic-word distribution output
     - Perplexity and coherence scores for the fitted LDA model
     - Most common topics based on sentiment of reviews
     - Topic distribution for positive and negative reviews
+
 Some notes for Step 3:
     - You will need to uncomment the !pip install --upgrade gensim pyLDAvis spacy pandas scikit-learn if you do not have the necessary packages already installed.
     - Since LDA is a probabilistic model and the optimal k value is found by computing coherence scores of different k values using a random sample of the full dataset to reduce runtime, we fix a random seed to improve consistency in results and help with reproducibility. 
