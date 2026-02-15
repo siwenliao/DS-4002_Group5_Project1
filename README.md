@@ -56,6 +56,7 @@ DS-4002_Group5_Project1/
 │
 ├── LICENSE
 └── README.md
+```
 
 ### Folder Descriptions
 - **DATA/**: Contains original dataset of 33,396 McDonald's Reviews downloaded from Kaggle (scraped from Google), the cleaned dataset after preprocessing, and the cleaned dataset along with topics, topic probabilities, and sentiments assigned to each review. Also contains data appendix that includes more information about each dataset.
