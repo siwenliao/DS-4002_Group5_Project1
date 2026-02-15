@@ -73,7 +73,7 @@ DS-4002_Group5_Project1/
   - Some notes for Step 3:
     - You will need to uncomment the !pip install --upgrade gensim pyLDAvis spacy pandas scikit-learn if you do not have the necessary packages already installed.
     - Since LDA is a probabilistic model and the optimal k value is found by computing coherence scores of different k values using a random sample of the full dataset to reduce runtime, we fix a random seed to improve consistency in results and help with reproducibility. 
-    - While the coherence score for k=3 was the highest, k=6 was chosen because it was the highest k value before a noticeable dip in coherence for k >= 7. A higher k value implies more topics existing throughout the data, which provide more interesting results. In summary, k=6 was a balance between coherence scores and producing interesting/interpretable results.
+    - While the coherence score for $k=3$ was the highest, k=6 was chosen because it was the highest k value before a noticeable dip in coherence for $k >= 7$. A higher k value implies more topics existing throughout the data, which provide more interesting results. In summary, k=6 was a balance between coherence scores and producing interesting/interpretable results.
     - The topic labels for the 6 different topics are:
       - 0: 'Bad service, wrong orders, rude staff'
       - 1: 'Fast and quick service, clean place, friendly staff'
