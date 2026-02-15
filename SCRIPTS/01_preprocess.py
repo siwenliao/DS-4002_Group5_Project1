@@ -1,3 +1,5 @@
+# Goal: Clean and standardize the data to prepare for LDA
+# Steps: import and understand the data, clean text by removing punctuation and digits, remove stopwords, and perform lemmatization (reducing words down to their base form).
 
 import spacy.cli
 spacy.cli.download("en_core_web_md")
